@@ -64,3 +64,31 @@ summary(ur.pibrs)
 ur.crescimentopibs<-ur.df(diff(log(pibbrr))*100,type="drift",selectlags="AIC")
 summary(ur.crescimentopibs)
 
+taxaprevistaax2013
+#tabelas 7 (previsões para 2014)
+#taxa de crescimento em 2014 prevista pelo ETS*(A,N,A)
+taxaprevistaets12014=(exp(fets2014$mean[4])-pibbrr[75])*100/pibbrr[75]
+taxaprevistaets12014
+#taxa de crescimento em 2014 prevista pelo ETS(A,Ad,A)
+taxaprevistahw1a2014=(exp(fhw1a2014$mean[4])-pibbrr[75])*100/pibbrr[75]
+taxaprevistahw1a2014
+#taxa de crescimento em 2014 prevista pelo ETS(A,A,A)
+taxaprevistahw2a2014=(exp(fhw2a2014$mean[4])-pibbrr[75])*100/pibbrr[75]
+taxaprevistahw2a2014
+#taxa de crescimento em 2014 prevista arima
+taxaprevistaa2014=(exp(fa2014$mean[4])-pibbrr[75])*100/pibbrr[75]
+taxaprevistaa2014
+#taxa de crescimento em 2014 prevista pelo SARIMAX
+taxaprevistaa2014=(exp(fax2014$mean[4])-pibbrr[75])*100/pibbrr[75]
+taxaprevistaa2014
+#figura 2 (modelos)
+pdf(file="modelos.pdf")
+par(mfrow=c(3,2))
+plot(exp(pibbrrl),main="Modelo ETS(A,N,A)", xlab="tempo",ylab="PIB (milhões de R$, a preços de out/13)")
+lines(exp(nd_predets1$mean),col=2,lwd=3)
+lines(exp(fitted(ets1)),col=3,lwd=2)
+legend("topleft",c("Observado","Previsão","Modelo"),bty="n",col=1:2:3,lwd=rep(1:3:2))
+plot(exp(pibbrrl),main="Modelo ETS(A,Ad,A)",xlab="tempo",ylab="")
+lines(exp(nd_predhw1a),col=2,lwd=3)
+lines(exp(fitted(hw1a)),col=3,lwd=2)
+legend("topleft",c("Observado","Previsão do Modelo","Modelo"),bty="n", col=1:2:3,lwd=rep(1:3:2))
