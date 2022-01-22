@@ -63,3 +63,4 @@ ur.pibrs<-ur.df(pibbrr,type="drift",selectlags="AIC")
 summary(ur.pibrs)
 ur.crescimentopibs<-ur.df(diff(log(pibbrr))*100,type="drift",selectlags="AIC")
 summary(ur.crescimentopibs)
+
