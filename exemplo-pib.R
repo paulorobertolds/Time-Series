@@ -28,6 +28,7 @@ nd_predets1<-forecast(ets1,h=3)
 ets2014 = ets(pibbrrl)
 fets2014=forecast(ets2014,h=5)
 #modelo ETS(A,Ad,A)
+
 hw1a=hw(pibbrrlt2,seasonal="additive", damped=TRUE)
 nd_predhw1a<-ts(c(hw1a$mean[1],hw1a$mean[2],hw1a$mean[3]),start=c(2013,1), frequency=4)
 
@@ -35,8 +36,7 @@ hw1a2014 = hw(pibbrrl,seasonal="additive", damped=TRUE)
 fhw1a2014=forecast(hw1a2014,h=5)
 #modelo ETS(A,A,A)
 hw2a=hw(pibbrrlt2,seasonal="additive", damped=FALSE)
-nd_predhw2a<-ts(c(hw2a$mean[1],hw2a$mean[2],hw2a$mean[3]), +
-                  start=c(2013,1), frequency=4)
+nd_predhw2a<-ts(c(hw2a$mean[1],hw2a$mean[2],hw2a$mean[3]), start=c(2013,1), frequency=4)
 hw2a2014 = hw(pibbrrl,seasonal="additive", damped=FALSE)
 fhw2a2014=forecast(hw2a2014,h=5)
 #modelo arima
@@ -92,3 +92,34 @@ plot(exp(pibbrrl),main="Modelo ETS(A,Ad,A)",xlab="tempo",ylab="")
 lines(exp(nd_predhw1a),col=2,lwd=3)
 lines(exp(fitted(hw1a)),col=3,lwd=2)
 legend("topleft",c("Observado","Previsão do Modelo","Modelo"),bty="n", col=1:2:3,lwd=rep(1:3:2))
+
+
+plot(exp(pibbrrl),main="Modelo ETS(A,A,A)",xlab="tempo",ylab="PIB (milhões de R$, a preços de out/13)")
+lines(exp(nd_predhw2a),col=2,lwd=3)
+lines(exp(fitted(hw2a)),col=3,lwd=2)
+legend("topleft",c("Observado","Previsão do Modelo","Modelo"),bty="n", col=1:2:3,lwd=rep(1:3:2))
+plot(exp(pibbrrl),main="Modelo ARIMA(1,1,0)",xlab="tempo",ylab="")
+lines(exp(nd_preda$mean),col=2,lwd=3)
+lines(exp(fitted(aa2)),col=3,lwd=2)
+legend("topleft",c("Observado","Previsão do Modelo","Modelo"),bty="n", col=1:2:3,lwd=rep(1:3:2))
+plot(exp(pibbrrl),main="Modelo ARIMAX(1,1,0)x(0,0,1)",xlab="tempo", ylab="PIB (milhões de R$, a preços de out/13)")
+lines(exp(nd_predax$mean),col=2,lwd=3)
+lines(exp(fitted(sarimax1)),col=3,lwd=2)
+legend("topleft",c("Observado","Previsão do Modelo","Modelo"),bty="n", col=1:2:3,lwd=rep(1:3:2))
+dev.off()
+#Figura 3 diagnóstico do modelo arima
+arima2014 = auto.arima(pibbrrl)
+summary(arima2014)
+pdf(file="diagarima2014.pdf")
+tsdiag(arima2014)
+dev.off()
+#Figura 4 diagnóstico do modelo Sarimax
+#SARIMAX com pib mundial
+arimax2014 = auto.arima(pibbrrl,xreg=pibm)
+summary(arimax2014)
+pdf(file="diagaapm.pdf")
+tsdiag(arimax2014)
+dev.off()
+
+
+
