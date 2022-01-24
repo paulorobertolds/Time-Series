@@ -2,11 +2,12 @@
 
 #ler os dados a partir da internet (se tiverem num arquivo, deve-se usar read.table ou read.csv)
 options(digits=4)
-pibbr=read.delim('https://github.com/paulorobertolds/Time-Series/blob/main/pibtri.txt')
+#pibbr=read.csv('https://github.com/paulorobertolds/Time-Series/blob/main/pibtri.csv',header=FALSE)
+pibir=read.table("/home/freitas/Downloads/dados/pibtri.txt",header = FALSE)
 head(pibbr)
 igpdio=read.delim('https://github.com/paulorobertolds/Time-Series/blob/main/igpditri.txt', header= FALSE)
 igpdio=as.numeric(igpdio)
-
+str(pibbr)
 str(igpdio)
 igpdi = igpdio/igpdio[75,1]
 
