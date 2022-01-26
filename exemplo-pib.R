@@ -2,7 +2,7 @@
 
 #rm(list=all())
 #ler os dados
-options(digits=4)
+options(digits=4)t
 # Arquivo pibtri.txt disponível em https://github.com/paulorobertolds/Time-Series/blob/main/pibtri.txt
 pibbr <- read.table("~/Downloads/dados/pibtri.txt", quote="\"", comment.char="")
 #Arquiv igpdi.txt disponível em https://github.com/paulorobertolds/Time-Series/blob/main/igpditri.txt
@@ -49,4 +49,29 @@ summary(ur.crescimentopibs)
 #Decomposição da série
 pib.dec<-decompose(pibbrr)
 plot(pib.dec)
+
+sazonalidade <- pib.dec$seasonal
+plot(sazonalidade)
+
+#Verificar apenas as primeiras observações (os primeiros 4 trimestres)
+sazonalidade[1:4]
+plot(sazonalidade[1:4])
+# Conclusão: o Pib tende a aumentar no 2º e 4º trimestres e a diminuir mais no 1º trimestre e um pouco no 3º
+
+#Testes de sazonalidade
+
+library(seastests)
+#Teste combinado
+isSeasonal(pibbrr,freq=4)
+#Teste de Kruskall Wallis
+kw=kw(pibbrr,freq=4)
+print(kw)
+#Teste QS
+qs=qs(pibbrr,freq=4)
+print(qs)
+#Test F em dummies sazonais
+seasdum(pibbrr,freq=4)
+#Test de Welch
+welch(pibbrr,freq=4)
+
 
